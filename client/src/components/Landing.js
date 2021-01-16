@@ -8,6 +8,7 @@ import GroupShow from './GroupShow';
 export default (props) => {
   const [value, setValue] = useState("")
   const [groups, setGroups] = useState([])
+  const [group, setGroup] = useState({})
   const [searchTerm, setSearchTerm] = useState('')
   const [editTerm, setEditTerm] = useState('')
   const [title, setTitle] = useState('')
@@ -41,7 +42,8 @@ export default (props) => {
 const handleEdit = async (id, term) => {
   try {
     console.log(id)
-    let res = await axios.put(`/api/groups/${id}`, term)
+    setGroup({title: term, description: description})
+    let res = await axios.put(`/api/groups/${id}`, group)
     let newGroups = groups.map((d) => (d.id !== id ? d : res.data));
     setGroups(newGroups);
     } catch (err) {
@@ -49,13 +51,17 @@ const handleEdit = async (id, term) => {
     }
 }
 
-const handleNew = async (id, test) => {
-  try {
-    let res = await axios.post(`/api/groups/${id}`, test)
-    setGroups([...groups, test])
-  } catch (err) {
-    console.log(err)
-  }
+const handleSubmit = (e) => {
+  e.preventDefault();
+    console.log(group);
+    setGroup({title: title, description:description })
+    axios.post(`/api/groups`, group)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
   return (
@@ -64,7 +70,7 @@ const handleNew = async (id, test) => {
         <input type="text" placeholder="Search groups"
                 onChange={e => {setSearchTerm(e.target.value)}}/>
       </div>
-      <Form onSubmit={handleNew}>
+      <Form onSubmit={handleSubmit}>
       <Form.Input
         label={"Title"}
         value={title}
@@ -97,7 +103,7 @@ const handleNew = async (id, test) => {
                     <Card.Description>{g.description}</Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                  <Form onSubmit={() => handleEdit(g.id, {editTerm})}>
+                  <Form onSubmit={() => handleEdit(g.id, editTerm)}>
                     <Form.Input
                       label={"Title"}
                       value={editTerm}
