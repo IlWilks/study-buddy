@@ -3,16 +3,14 @@ import React, { Fragment, } from 'react';
 import { Switch, Route, } from 'react-router-dom';
 import { Container, } from "semantic-ui-react";
 import Landing from './components/Landing';
-
+import NavBar from './components/NavBar'
 import Login from './components/Login';
 import ConnectedRegister from './components/Register';
-
-import Navbar from "./components/Navbar";
 import MyGroups from "./components/MyGroups";
 
 const App = () => (
   <Fragment>
-    <Navbar />
+    <NavBar />
     <Container>
       <Switch>
         <Route exact path="/" component={Landing} />

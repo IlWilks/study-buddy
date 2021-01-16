@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
-import AuthConsumer, { AuthContext } from "../providers/AuthProvider.js";
+import { AuthContext } from "../providers/AuthProvider.js";
 
 const Navbar = (props) => {
   let history = useHistory();
