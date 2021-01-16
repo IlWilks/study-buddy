@@ -1,8 +1,9 @@
 class Api::ChannelsController < ApplicationController
+  before_action :set_group
   before_action :set_channel, only: [:show, :update, :destroy]
 
   def index
-    render json: Channel.all
+    render json: @group.channel.all
   end
 
   def show
@@ -10,7 +11,7 @@ class Api::ChannelsController < ApplicationController
   end
 
   def create
-    channel = Channel.new(channel_params)
+    channel = @group.channel.new(channel_params)
     if channel.save
       render json: channel
     else
@@ -33,11 +34,15 @@ class Api::ChannelsController < ApplicationController
 
   private
 
+  def set_group
+    @group = Group.find(params[:group_id])
+  end
+
   def set_channel
-    @channel = Channel.find(params[:id])
+    @channel = @group.channel.find(params[:id])
   end
 
   def channel_params
-    params.require(:channel).permit(:subject, :public, :description)
+    params.require(:group_id, :channel).permit(:subject, :public, :description)
   end
 end
