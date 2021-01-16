@@ -3,14 +3,16 @@ import React, { Fragment, } from 'react';
 import { Switch, Route, } from 'react-router-dom';
 import { Container, } from "semantic-ui-react";
 import Landing from './components/Landing';
+import Login from './components/Login';
+import ConnectedRegister from './components/Register';
 
 const App = () => (
   <Fragment>
     <Container>
       <Switch>
         <Route exact path="/" component={Landing} />
-        {/* <Route exact path="/login" component={Login} /> */}
-        {/* <Route exact path="/register" component={Register} /> */}
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={ConnectedRegister} />
         {/* <Route component={NoMatch} /> */}
       </Switch>
     </Container>
