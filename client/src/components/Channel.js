@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Form, Button, Card , Image} from "semantic-ui-react";
 import {useEffect, useState} from 'react';
+import PointCounter from "./PointCounter";
 
 const Channel = (props) => {
 
@@ -29,6 +30,7 @@ const Channel = (props) => {
       <Card key={comment.id}>
         <Image src={comment.photo}/>
         <Card.Content>{comment.body}</Card.Content>
+        <PointCounter />
       </Card>
     ))
   }
