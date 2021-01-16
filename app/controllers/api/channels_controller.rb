@@ -1,4 +1,5 @@
 class Api::ChannelsController < ApplicationController
+  
   def index
   end
 
