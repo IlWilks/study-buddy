@@ -1,16 +1,16 @@
 import axios from "axios";
 import { Form, Button, Card , Image} from "semantic-ui-react";
 import {useEffect, useState} from 'react';
-
 const Channel = (props) => {
-
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState({})
+  const [comment, setComment] = useState({
+    body: '',
+    photo: ''
+  })
   const [body, setBody] = useState('');
   const [photo, setPhoto] = useState('');
-  
   const getComments = () =>{
-    axios.get(`/api/channels/5/comments`)
+    axios.get(`/api/channels/${props.match.params.id}/comments`)
     .then((res)=>{
       console.log(res.data);
       setComments(res.data);
@@ -19,7 +19,6 @@ const Channel = (props) => {
       console.log(err);
     });
   };
-  
   useEffect(()=>{
     getComments();
   },[])
@@ -29,53 +28,56 @@ const Channel = (props) => {
       <Card key={comment.id}>
         <Image src={comment.photo}/>
         <Card.Content>{comment.body}</Card.Content>
+        <Button icon='trash' color='red' onClick={deleteComment(comment.id)}/>
       </Card>
     ))
   }
-
   const handleSubmit = (e) => {
-    e.preventDefault();
     console.log(comment);
-    setComment({body: body, photo: photo })
-    axios.post(`/api/channels/5/comments`, comment)
+    axios.post(`/api/channels/${props.match.params.id}/comments`, comment)
     .then((res) => {
       console.log(res);
     })
     .catch((err) => {
       console.log(err)
     })
+    window.location.reload();
   }
-
-  // const handleChange = (e) => {
-  //   setComment({[e.target.name]: e.target.value})
-  // }
-
+  const handleChange = (e) => {
+    setComment({...comment, [e.target.name]: e.target.value})
+  }
+  const deleteComment = (id) =>{
+    axios.delete(`/api/channels/${props.match.params.id}/comments/${id}`)
+    .then((res)=>{
+      console.log(res.data);
+      comments.filter((comment) => comment.id !== id);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  }
   return (
     <>
       <h1>Channel Name</h1>
-      <p>Comments</p>
-      <p>Add a Comment</p>
       <Form onSubmit={handleSubmit}>
         <Form.Input 
         label='Body'
         placeholder='Comment here...'
         name='body'
-        onChange={(e)=>setBody(e.target.value)}
+        onChange={handleChange}
         />
         <Form.Input 
         label='Photo'
         placeholder='url to image'
         name='photo'
-        onChange={(e)=>setPhoto(e.target.value)}
+        onChange={handleChange}
         />
         <Button type='submit'>add</Button>
       </Form>
       <Card.Group>
         {renderComments()} 
       </Card.Group>
-
     </>
   )
 }
-
 export default Channel;
