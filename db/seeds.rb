@@ -22,4 +22,3 @@ end
   Comment.create(channel_id: rand(1..15), user_id: rand(1..3), body: Faker::TvShows::MichaelScott.quote, points: Faker::Number.within(range: 1..100), photo: "This is a photo")
 end
 puts "seeded"
-

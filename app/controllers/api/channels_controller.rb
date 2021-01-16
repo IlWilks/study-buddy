@@ -1,7 +1,7 @@
 class Api::ChannelsController < ApplicationController
   before_action :set_group
   before_action :set_channel, only: [:show, :update, :destroy]
-
+  
   def index
     render json: @group.channels.all
   end
