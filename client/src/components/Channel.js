@@ -22,6 +22,7 @@ const Channel = (props) => {
   useEffect(()=>{
     getComments();
   },[])
+
   const renderComments = () =>{
     return comments.map((comment)=>(
       <Card key={comment.id}>
