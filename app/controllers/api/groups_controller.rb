@@ -1,9 +1,8 @@
 class Api::GroupsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_exercises, only: [:update, :destroy, :show]
 
   def index
-    render json: @current_user.groups.all
+    render json: Group.all
   end
 
   def show
@@ -11,7 +10,7 @@ class Api::GroupsController < ApplicationController
   end
 
   def create
-    group = @current_user.groups.new(group_params)
+    group = Group.new(group_params)
     if group.save
       render json: group
     else
@@ -34,6 +33,6 @@ class Api::GroupsController < ApplicationController
     params.require(:group).permit(:title, :description)
   end
   def set_group
-    @group = @current_user.groups.find(params[:id])
+    @group = Group.find(params[:id])
   end
 end
