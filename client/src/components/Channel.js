@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Form, Button, } from "semantic-ui-react";
+import { Form, Button, Card , Image} from "semantic-ui-react";
 import {useEffect, useState} from 'react';
 
 const Channel = (props) => {
@@ -13,7 +13,7 @@ const Channel = (props) => {
     axios.get(`/api/channels/5/comments`)
     .then((res)=>{
       console.log(res.data);
-      setComments([...comments, comment])
+      setComments(res.data);
     })
     .catch((err)=>{
       console.log(err);
@@ -23,7 +23,16 @@ const Channel = (props) => {
   useEffect(()=>{
     getComments();
   },[])
-  
+
+  const renderComments = () =>{
+    return comments.map((comment)=>(
+      <Card key={comment.id}>
+        <Image src={comment.photo}/>
+        <Card.Content>{comment.body}</Card.Content>
+      </Card>
+    ))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(comment);
@@ -45,7 +54,7 @@ const Channel = (props) => {
     <>
       <h1>Channel Name</h1>
       <p>Comments</p>
-      <p>Add Comment Form</p>
+      <p>Add a Comment</p>
       <Form onSubmit={handleSubmit}>
         <Form.Input 
         label='Body'
@@ -61,6 +70,10 @@ const Channel = (props) => {
         />
         <Button type='submit'>add</Button>
       </Form>
+      <Card.Group>
+        {renderComments()} 
+      </Card.Group>
+
     </>
   )
 }
