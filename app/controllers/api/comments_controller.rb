@@ -39,11 +39,11 @@ class Api::CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:body, :points, :photo )
+    params.require(:comment).permit(:body, :points, :photo)
   end
 
   def set_channel
-    @channel = Channel.find(params[:group_id])
+    @channel = Channel.find(params[:channel_id])
   end
 
   def set_comment

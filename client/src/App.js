@@ -2,28 +2,25 @@ import React, { Fragment, } from 'react';
 
 import { Switch, Route, } from 'react-router-dom';
 import { Container, } from "semantic-ui-react";
-import Landing from './components/Landing';
 
 import Login from './components/Login';
 import ConnectedRegister from './components/Register';
 
-import Navbar from "./components/Navbar";
+import NavBar from "./components/NavBar";
 import MyGroups from "./components/MyGroups";
+import GroupShow from './components/GroupShow';
+import Landing from './components/Landing';
 
 const App = () => (
   <Fragment>
-    <Navbar />
+    <NavBar />
     <Container>
       <Switch>
         <Route exact path="/" component={Landing} />
-
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={ConnectedRegister} />
-
+        <Route exact path="/:id" component={GroupShow}/>
         <Route exact path="/mygroups" component={MyGroups} />
-     
-
-        {/* <Route component={NoMatch} /> */}
       </Switch>
     </Container>
   </Fragment>
