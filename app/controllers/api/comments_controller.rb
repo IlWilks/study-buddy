@@ -1,4 +1,5 @@
 class Api::CommentsController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :update]
   before_action :set_channel
   before_action :set_comment, only: [:show, :update, :destroy]
 
@@ -15,11 +16,11 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    comment = @channel.comments.new(comment_params)
-    if (comment.save)
-      render json: comment
+    @comment = @current_user.comments.new(comment_params)
+    if @comment.save
+      render json: @comment
     else
-      render json: comment.errors, status: 422
+      render json: @comment.errors, status: 422
     end
   end
 
@@ -38,15 +39,15 @@ class Api::CommentsController < ApplicationController
 
   private
 
-  def comment_params
-    params.require(:comment).permit(:body, :points, :photo )
-  end
-
   def set_channel
-    @channel = Channel.find(params[:group_id])
+    @channel = Channel.find(params[:channel_id])
   end
 
   def set_comment
-    @comment = @channel.comments.find(params[:id])
+    @comment = Comment.find(params[:id])
+  end
+
+  def comment_params
+    params.permit(:user_id, :body, :points, :photo, :channel_id)
   end
 end
