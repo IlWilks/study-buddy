@@ -27,6 +27,7 @@ const Channel = (props) => {
       <Card key={comment.id}>
         <Image src={comment.photo}/>
         <Card.Content>{comment.body}</Card.Content>
+        <Button icon='trash' color='red' onClick={deleteComment(comment.id)}/>
       </Card>
     ))
   }
@@ -43,6 +44,16 @@ const Channel = (props) => {
   }
   const handleChange = (e) => {
     setComment({...comment, [e.target.name]: e.target.value})
+  }
+  const deleteComment = (id) =>{
+    axios.delete(`/api/channels/${props.match.params.id}/comments/${id}`)
+    .then((res)=>{
+      console.log(res.data);
+      comments.filter((comment) => comment.id !== id);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
   }
   return (
     <>
