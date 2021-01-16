@@ -1,3 +1,17 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  mount_devise_token_auth_for 'User', at: 'api/auth'
+  namespace :api do
+    resources :users do
+      resources :groups
+    end
+    resources :groups do
+      resources :channels
+    end
+    resources :channels do
+      resources :comments
+    end
+    # resources :users do
+    #   resources :comments 
+    # end
+  end
 end
