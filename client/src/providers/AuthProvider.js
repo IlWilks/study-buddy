@@ -81,7 +81,7 @@ const AuthProvider = (props) => {
         handleRegister: handleRegister,
         handleLogin: handleLogin,
         handleLogout: handleLogout,
-        setUser: (user) => setUser(user),
+        setUser: (user) => setUser({user}),
       }}
     >
       {props.children}
