@@ -1,5 +1,5 @@
 class Api::GroupsController < ApplicationController
-  before_action :set_exercises, only: [:update, :destroy, :show]
+  before_action :set_group, only: [:update, :destroy, :show]
 
   def index
     render json: Group.all
@@ -30,8 +30,9 @@ class Api::GroupsController < ApplicationController
 
   private
   def group_params
-    params.require(:group).permit(:title, :description)
+    params.permit(:title, :description)
   end
+  
   def set_group
     @group = Group.find(params[:id])
   end
