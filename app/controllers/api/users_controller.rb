@@ -19,4 +19,6 @@ class Api::UsersController < ApplicationController
 
   def update
   end
+
+  private
 end
