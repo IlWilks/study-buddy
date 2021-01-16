@@ -22,6 +22,10 @@ const Channel = (props) => {
   useEffect(()=>{
     getComments();
   },[])
+<<<<<<< HEAD
+=======
+
+>>>>>>> d3060febd44317c4d29abefdf8319c62c1546056
   const renderComments = () =>{
     return comments.map((comment)=>(
       <Card key={comment.id}>
@@ -30,6 +34,10 @@ const Channel = (props) => {
       </Card>
     ))
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> d3060febd44317c4d29abefdf8319c62c1546056
   const handleSubmit = (e) => {
     console.log(comment);
     axios.post(`/api/channels/${props.match.params.id}/comments`, comment)
@@ -47,6 +55,11 @@ const Channel = (props) => {
   return (
     <>
       <h1>Channel Name</h1>
+<<<<<<< HEAD
+=======
+      <p>Comments</p>
+      <p>Add a Comment</p>
+>>>>>>> d3060febd44317c4d29abefdf8319c62c1546056
       <Form onSubmit={handleSubmit}>
         <Form.Input 
         label='Body'
@@ -65,6 +78,10 @@ const Channel = (props) => {
       <Card.Group>
         {renderComments()} 
       </Card.Group>
+<<<<<<< HEAD
+=======
+
+>>>>>>> d3060febd44317c4d29abefdf8319c62c1546056
     </>
   )
 }
